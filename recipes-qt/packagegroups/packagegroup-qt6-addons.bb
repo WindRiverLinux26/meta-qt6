@@ -16,7 +16,6 @@ RDEPENDS:${PN} += " \
     qtconnectivity \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtdatavis3d', '', d)} \
     qtdeviceutilities \
-    qtdoc \
     qtgraphs \
     qtgrpc \
     qthttpserver \
@@ -50,25 +49,20 @@ RDEPENDS:${PN} += " \
 
 RDEPENDS:${PN}:append:aarch64 = "\
     qtquick3dphysics \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtpdf', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'webengine', 'qtwebengine qtwebview', '', d)} \
 "
 RDEPENDS:${PN}:append:arm = " qtquick3dphysics"
 RDEPENDS:${PN}:append:armv6 = "\
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtpdf', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'webengine', 'qtwebengine qtwebview', '', d)} \
 "
 RDEPENDS:${PN}:append:armv7a = "\
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtpdf', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'webengine', 'qtwebengine qtwebview', '', d)} \
 "
 RDEPENDS:${PN}:append:armv7ve = "\
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtpdf', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'webengine', 'qtwebengine qtwebview', '', d)} \
 "
 RDEPENDS:${PN}:append:x86 = " qtquick3dphysics"
 RDEPENDS:${PN}:append:x86-64 = "\
     qtquick3dphysics \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtpdf', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'webengine', 'qtwebengine qtwebview', '', d)} \
 "
