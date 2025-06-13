@@ -14,6 +14,8 @@ include recipes-qt/qt6/qt6.inc
 
 DEPENDS += "qtbase"
 
+SRC_URI += "file://CVE-2025-5683.patch"
+
 PACKAGECONFIG ?= "tiff webp"
 PACKAGECONFIG[jasper] = "-DFEATURE_jasper=ON,-DFEATURE_jasper=OFF,jasper"
 PACKAGECONFIG[mng] = "-DFEATURE_mng=ON,-DFEATURE_mng=OFF,libmng"
