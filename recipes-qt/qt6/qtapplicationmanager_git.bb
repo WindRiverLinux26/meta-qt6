@@ -13,6 +13,8 @@ inherit qt6-cmake
 include recipes-qt/qt6/qt6-git.inc
 include recipes-qt/qt6/qt6.inc
 
+SRC_URI += "file://0001-Add-configure-option-for-bubblewrap-container.patch"
+
 DEPENDS += "qtbase qtdeclarative libyaml libarchive qtapplicationmanager-native"
 DEPENDS:append:libc-musl = " libexecinfo"
 RDEPENDS:${PN}:class-target = "libcrypto ${PN}-tools"
@@ -23,6 +25,7 @@ PACKAGECONFIG ?= "${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'multi-proc
 
 PACKAGECONFIG[tools-only] = "-DFEATURE_am_tools_only=ON, -DFEATURE_am_tools_only=OFF"
 PACKAGECONFIG[multi-process] = "-DFEATURE_am_multi_process=ON, -DFEATURE_am_multi_process=OFF, qtwayland qtwayland-native"
+PACKAGECONFIG[bubblewrap] = "-DFEATURE_am_bubblewrap_container=ON,-DFEATURE_am_bubblewrap_container=OFF,,bubblewrap"
 
 PACKAGECONFIG:class-native ??= "tools-only"
 PACKAGECONFIG:class-nativesdk ??= "${PACKAGECONFIG:class-native}"

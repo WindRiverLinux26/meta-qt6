@@ -1,0 +1,104 @@
+From db53736b5209cb38ff80e033690ba844e38fd15b Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Tue, 20 May 2025 05:23:34 +0000
+Subject: [PATCH] Add configure option for bubblewrap container
+
+Bubblewrap container has runtime dependency for bwrap, adding separate
+config for the feature lets us disable it if bwrap is not available.
+
+Task-number: QTBUG-136961
+Pick-to: 6.10 6.9 6.8
+Change-Id: I03c3ce4e351699bbeb6d08a002b36d774c1fa9b5
+Reviewed-by: Robert Griebl <robert.griebl@qt.io>
+
+Upstream-Status: Backport [https://codereview.qt-project.org/c/qt/qtapplicationmanager/+/646764]
+
+Signed-off-by: Zhang Peng <peng.zhang1.cn@windriver.com>
+---
+ doc/installation.qdoc                      | 4 ++++
+ examples/applicationmanager/CMakeLists.txt | 2 ++
+ src/common-lib/configure.cmake             | 7 +++++++
+ src/common-lib/qt_cmdline.cmake            | 1 +
+ src/plugins/CMakeLists.txt                 | 2 +-
+ tests/auto/qml/CMakeLists.txt              | 2 ++
+ 6 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/doc/installation.qdoc b/doc/installation.qdoc
+index 1c0ede00..253cbf46 100644
+--- a/doc/installation.qdoc
++++ b/doc/installation.qdoc
+@@ -199,6 +199,10 @@ modules:
+   \li \c{systemd-watchdog}
+   \li Set to \c no to disable building against \c libsystemd for \l{Watchdog} support and \c
+       yes to force building with it. The default depends on the availability of \c libsystemd-dev.
++\row
++  \li \c{bubblewrap}
++  \li Set to \c no to disable building the \l{Bubblewrap Container} plugin and \c
++      yes to force building it. By default the plugin is built in multi-process mode.
+ \endtable
+ 
+ \section2 The Hardware ID
+diff --git a/examples/applicationmanager/CMakeLists.txt b/examples/applicationmanager/CMakeLists.txt
+index 18be484d..945afc1e 100644
+--- a/examples/applicationmanager/CMakeLists.txt
++++ b/examples/applicationmanager/CMakeLists.txt
+@@ -15,5 +15,7 @@ endif()
+ qt_internal_add_example(custom-appman)
+ if(LINUX)
+     qt_internal_add_example(softwarecontainer-plugin)
++endif()
++if (QT_FEATURE_am_bubblewrap_container)
+     qt_internal_add_example(bubblewrap-example)
+ endif()
+diff --git a/src/common-lib/configure.cmake b/src/common-lib/configure.cmake
+index 8940b4de..a0b7d2c6 100644
+--- a/src/common-lib/configure.cmake
++++ b/src/common-lib/configure.cmake
+@@ -53,6 +53,13 @@ qt_feature("am-multi-process" PUBLIC
+     DISABLE INPUT_force_mode STREQUAL 'single'
+ )
+ 
++qt_feature("am-bubblewrap-container" PUBLIC
++    LABEL "Bubblewrap container support"
++    CONDITION LINUX AND QT_FEATURE_am_multi_process
++    ENABLE INPUT_bubblewrap STREQUAL 'yes'
++    DISABLE INPUT_bubblewrap STREQUAL 'no'
++)
++
+ qt_feature("am-installer" PUBLIC
+     LABEL "Enable the installer component"
+     CONDITION QT_FEATURE_ssl AND NOT IOS
+diff --git a/src/common-lib/qt_cmdline.cmake b/src/common-lib/qt_cmdline.cmake
+index 190104da..69bc2f2b 100644
+--- a/src/common-lib/qt_cmdline.cmake
++++ b/src/common-lib/qt_cmdline.cmake
+@@ -11,3 +11,4 @@ qt_commandline_option(libbacktrace TYPE boolean)
+ qt_commandline_option(stackwalker TYPE boolean)
+ qt_commandline_option(libyaml TYPE enum VALUES qt system)
+ qt_commandline_option(hardware-id TYPE string)
++qt_commandline_option(bubblewrap TYPE boolean)
+diff --git a/src/plugins/CMakeLists.txt b/src/plugins/CMakeLists.txt
+index 4ec5f1bf..2d69f4e7 100644
+--- a/src/plugins/CMakeLists.txt
++++ b/src/plugins/CMakeLists.txt
+@@ -1,4 +1,4 @@
+ 
+-if(LINUX AND QT_FEATURE_am_multi_process)
++if(QT_FEATURE_am_bubblewrap_container)
+     add_subdirectory(bubblewrap-container-plugin)
+ endif()
+diff --git a/tests/auto/qml/CMakeLists.txt b/tests/auto/qml/CMakeLists.txt
+index b89a6b1d..6c42c59c 100644
+--- a/tests/auto/qml/CMakeLists.txt
++++ b/tests/auto/qml/CMakeLists.txt
+@@ -26,5 +26,7 @@ add_subdirectory(windowproperties)
+ if (QT_FEATURE_am_multi_process)
+     add_subdirectory(crash)
+     add_subdirectory(processtitle)
++endif()
++if (QT_FEATURE_am_bubblewrap_container)
+     add_subdirectory(bubblewrap)
+ endif()
+-- 
+2.50.0
+
