@@ -17,6 +17,11 @@ include recipes-qt/qt6/qt6.inc
 
 DEPENDS += "qtbase qtshadertools qtshadertools-native qtdeclarative-native qtlanguageserver qtsvg"
 
+SRC_URI += " \
+            file://0001-EventCalendar-example-balance-begin-endResetModel-ca.patch \
+            file://0002-EventCalendar-example-reference-the-listview-explici.patch \
+            "
+
 BBCLASSEXTEND = "native nativesdk"
 
 INSANE_SKIP:${PN}-ptest += "buildpaths"

@@ -1,0 +1,45 @@
+From 57c635abf2b7ca3071a61ac077d34028ecaf91cc Mon Sep 17 00:00:00 2001
+From: Volker Hilsheimer <volker.hilsheimer@qt.io>
+Date: Thu, 22 May 2025 13:15:06 +0200
+Subject: [PATCH 2/2] EventCalendar example: reference the listview explicitly
+ in the delegate
+
+The example generates warnings on stderr when shutting down, presumably
+because (some) delegate items no longer have a parent. Instead of
+referencing parent, give the ListView an ID and reference it explicitly.
+
+Pick-to: 6.9 6.8
+Change-Id: If968e9f95e31226e9c3fb2f63eb92cff5afd3cba
+Reviewed-by: Mitch Curtis <mitch.curtis@qt.io>
+
+Upstream-Status: Backport [https://codereview.qt-project.org/c/qt/qtdeclarative/+/647421]
+
+Signed-off-by: Zhang Peng <peng.zhang1.cn@windriver.com>
+---
+ examples/quickcontrols/eventcalendar/MonthGridDelegate.qml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/examples/quickcontrols/eventcalendar/MonthGridDelegate.qml b/examples/quickcontrols/eventcalendar/MonthGridDelegate.qml
+index c49dfda1ae..470e6439fb 100644
+--- a/examples/quickcontrols/eventcalendar/MonthGridDelegate.qml
++++ b/examples/quickcontrols/eventcalendar/MonthGridDelegate.qml
+@@ -44,6 +44,7 @@ ColumnLayout {
+     }
+ 
+     ListView {
++        id: listView
+         spacing: 1
+         clip: true
+ 
+@@ -53,7 +54,7 @@ ColumnLayout {
+ 
+         delegate: ItemDelegate {
+             id: itemDelegate
+-            width: parent.width
++            width: listView.width
+             text: name
+             font.pixelSize: Qt.application.font.pixelSize * 0.8
+             leftPadding: 4
+-- 
+2.50.0
+
