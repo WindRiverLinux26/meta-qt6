@@ -22,6 +22,7 @@ SRC_URI += "\
     file://0004-Fix-qt.toolchain.cmake-for-SDK-use.patch \
     file://0005-testlib-don-t-track-the-build-or-source-directories.patch \
     file://CVE-2025-5455.patch \
+    file://CVE-2025-3512.patch \
 "
 SRC_URI:append:class-native = "\
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
