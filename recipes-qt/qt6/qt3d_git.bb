@@ -25,6 +25,7 @@ ASSIMP_BRANCH = "qt6_assimp"
 
 SRC_URI += " \
     ${QT_GIT}/${QT_GIT_PROJECT}/qtquick3d-assimp.git;name=qt3d-assimp;branch=${ASSIMP_BRANCH};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/assimp/src \
+    file://0001-qt6-assimp-remove-file-without-the-prior-written-per.patch;patchdir=${S}/src/3rdparty/assimp/src \
 "
 
 # Needed for supporting 64bit off_t
