@@ -13,7 +13,9 @@ inherit qt6-cmake
 include recipes-qt/qt6/qt6-git.inc
 include recipes-qt/qt6/qt6.inc
 
-SRC_URI += "file://0001-Remove-the-export-of-QT_PROTO_INCLUDES-property.patch"
+SRC_URI += "file://0001-Remove-the-export-of-QT_PROTO_INCLUDES-property.patch \
+            file://0001-Adapt-the-generator-code-to-be-compatible-with-proto.patch \
+            "
 
 DEPENDS += "qtbase qtgrpc-native protobuf protobuf-native"
 
