@@ -23,4 +23,6 @@ PACKAGECONFIG[nokia] = "-DFEATURE_geoservices_nokia=ON,-DFEATURE_geoservices_nok
 PACKAGECONFIG[osm] = "-DFEATURE_geoservices_osm=ON,-DFEATURE_geoservices_osm=OFF,"
 PACKAGECONFIG[qml] = ",,qtdeclarative qtdeclarative-native"
 
+SRC_URI += "file://0001-tests-qmlinterface-use-QFINDTESTDATA-instead-of-SRCDIR.patch"
+
 INSANE_SKIP:${PN}-ptest += "buildpaths"

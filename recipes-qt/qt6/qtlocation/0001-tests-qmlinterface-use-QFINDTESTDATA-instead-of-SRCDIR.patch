@@ -1,0 +1,120 @@
+tests: qmlinterface: use QFINDTESTDATA instead of hardcoded SRCDIR
+
+SRCDIR is defined as CMAKE_CURRENT_SOURCE_DIR at compile time, which
+embeds the build host absolute path into the test binary. This causes
+ptest failures on target because the path does not exist.
+
+Replace SRCDIR with QFINDTESTDATA which searches for test data relative
+to the executable at runtime.
+
+Upstream-Status: Pending
+
+Signed-off-by: Zhang Peng <peng.zhang1.cn@windriver.com>
+
+diff --git a/tests/auto/qmlinterface/CMakeLists.txt b/tests/auto/qmlinterface/CMakeLists.txt
+--- a/tests/auto/qmlinterface/CMakeLists.txt
++++ b/tests/auto/qmlinterface/CMakeLists.txt
+@@ -1,8 +1,8 @@
+ qt_internal_add_test(tst_qmlinterface
+     SOURCES
+         tst_qmlinterface.cpp
+-    DEFINES
+-        SRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
++    TESTDATA
++        data/*
+     LIBRARIES
+         Qt::Location
+         Qt::Positioning
+diff --git a/tests/auto/qmlinterface/tst_qmlinterface.cpp b/tests/auto/qmlinterface/tst_qmlinterface.cpp
+--- a/tests/auto/qmlinterface/tst_qmlinterface.cpp
++++ b/tests/auto/qmlinterface/tst_qmlinterface.cpp
+@@ -123,7 +123,7 @@
+ void tst_qmlinterface::testAddress()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestAddress.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestAddress.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -146,7 +146,7 @@
+ void tst_qmlinterface::testLocation()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestLocation.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestLocation.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -166,7 +166,7 @@
+ void tst_qmlinterface::testCategory()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestCategory.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestCategory.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -185,7 +185,7 @@
+ void tst_qmlinterface::testIcon()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestIcon.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestIcon.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -203,7 +203,7 @@
+ void tst_qmlinterface::testRatings()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestRatings.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestRatings.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -223,7 +223,7 @@
+ void tst_qmlinterface::testSupplier()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestSupplier.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestSupplier.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -244,7 +244,7 @@
+ void tst_qmlinterface::testUser()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestUser.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestUser.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -263,7 +263,7 @@
+ void tst_qmlinterface::testPlaceAttribute()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestPlaceAttribute.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestPlaceAttribute.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -282,7 +282,7 @@
+ void tst_qmlinterface::testContactDetail()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestContactDetail.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestContactDetail.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
+@@ -301,7 +301,7 @@
+ void tst_qmlinterface::testPlace()
+ {
+     QQmlEngine engine;
+-    QQmlComponent component(&engine, SRCDIR "data/TestPlace.qml");
++    QQmlComponent component(&engine, QFINDTESTDATA("data/TestPlace.qml"));
+     QVERIFY2(component.isReady(), qPrintable(component.errorString()));
+     QObject *qmlObject = component.create();
+ 
