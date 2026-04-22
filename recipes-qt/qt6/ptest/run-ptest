@@ -24,6 +24,8 @@ fi
 for test in $(cat tst_list); do
     (
     cd $(dirname ${test})
+    export PATH="$PWD:$PATH"
+    export LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH"
     t=$(basename ${test})
     ./${t} && echo PASS: ${t} || echo FAIL: ${t}
     )
