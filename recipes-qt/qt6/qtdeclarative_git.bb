@@ -20,6 +20,8 @@ DEPENDS += "qtbase qtshadertools qtshadertools-native qtdeclarative-native qtlan
 SRC_URI += " \
             file://0001-EventCalendar-example-balance-begin-endResetModel-ca.patch \
             file://0002-EventCalendar-example-reference-the-listview-explici.patch \
+            file://CVE-2025-12385-0001.patch \
+            file://CVE-2025-12385-0002.patch \
             "
 
 BBCLASSEXTEND = "native nativesdk"
