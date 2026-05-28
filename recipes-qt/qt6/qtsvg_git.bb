@@ -15,6 +15,9 @@ inherit qt6-cmake
 include recipes-qt/qt6/qt6-git.inc
 include recipes-qt/qt6/qt6.inc
 
+SRC_URI += " \
+            file://CVE-2025-10728.patch \
+            "
 DEPENDS += "qtbase"
 
 BBCLASSEXTEND = "native nativesdk"
