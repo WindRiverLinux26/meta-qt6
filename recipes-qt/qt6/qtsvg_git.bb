@@ -18,6 +18,7 @@ include recipes-qt/qt6/qt6.inc
 SRC_URI += " \
             file://CVE-2025-10728.patch \
             file://CVE-2025-10729.patch \
+            file://CVE-2026-6210.patch \
             "
 DEPENDS += "qtbase"
 
