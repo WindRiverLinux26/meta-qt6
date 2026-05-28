@@ -22,6 +22,7 @@ SRC_URI += " \
             file://0002-EventCalendar-example-reference-the-listview-explici.patch \
             file://CVE-2025-12385-0001.patch \
             file://CVE-2025-12385-0002.patch \
+            file://CVE-2025-14576.patch \
             "
 
 BBCLASSEXTEND = "native nativesdk"
