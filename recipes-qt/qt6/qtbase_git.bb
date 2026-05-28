@@ -24,6 +24,7 @@ SRC_URI += "\
     file://CVE-2025-5455.patch \
     file://CVE-2025-3512.patch \
     file://CVE-2025-5992.patch \
+    file://CVE-2025-14575.patch \
 "
 SRC_URI:append:class-native = "\
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
